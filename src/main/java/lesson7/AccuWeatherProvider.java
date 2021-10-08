@@ -13,7 +13,8 @@ public class AccuWeatherProvider implements WeatherProvider {
 
     private static final String BASE_HOST = "dataservice.accuweather.com";
     private static final String FORECAST_ENDPOINT = "forecasts";
-    private static final String CURRENT_CONDITIONS_ENDPOINT = "currentconditions";
+    private static final String DAILY_PATH = "daily";
+    private static final String DAY_COUNT = "5day";
     private static final String API_VERSION = "v1";
     private static final String API_KEY = ApplicationGlobalState.getInstance().getApiKey();
 
@@ -27,8 +28,10 @@ public class AccuWeatherProvider implements WeatherProvider {
             HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host(BASE_HOST)
-                .addPathSegment(CURRENT_CONDITIONS_ENDPOINT)
+                .addPathSegment(FORECAST_ENDPOINT)
                 .addPathSegment(API_VERSION)
+                .addPathSegment(DAILY_PATH)
+                .addPathSegment(DAY_COUNT)
                 .addPathSegment(cityKey)
                 .addQueryParameter("apikey", API_KEY)
                 .build();
@@ -39,10 +42,12 @@ public class AccuWeatherProvider implements WeatherProvider {
                 .build();
 
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+//            System.out.println(response.body().string());
+            WeatherResponse weatherResponse = new WeatherResponse(response.body().string());
             // TODO: Сделать в рамках д/з вывод более приятным для пользователя.
             //  Создать класс WeatherResponse, десериализовать ответ сервера в экземпляр класса
             //  Вывести пользователю только текущую температуру в C и сообщение (weather text)
+            weatherResponse.forecastReport();
         }
     }
 
