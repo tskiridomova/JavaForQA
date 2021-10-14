@@ -34,6 +34,7 @@ public class AccuWeatherProvider implements WeatherProvider {
                 .addPathSegment(DAY_COUNT)
                 .addPathSegment(cityKey)
                 .addQueryParameter("apikey", API_KEY)
+                .addQueryParameter("metric", "true")
                 .build();
 
             Request request = new Request.Builder()
@@ -42,11 +43,7 @@ public class AccuWeatherProvider implements WeatherProvider {
                 .build();
 
             Response response = client.newCall(request).execute();
-//            System.out.println(response.body().string());
             WeatherResponse weatherResponse = new WeatherResponse(response.body().string());
-            // TODO: Сделать в рамках д/з вывод более приятным для пользователя.
-            //  Создать класс WeatherResponse, десериализовать ответ сервера в экземпляр класса
-            //  Вывести пользователю только текущую температуру в C и сообщение (weather text)
             weatherResponse.forecastReport();
         }
     }

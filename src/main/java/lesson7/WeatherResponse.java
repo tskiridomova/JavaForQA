@@ -26,7 +26,7 @@ public class WeatherResponse {
                     ApplicationGlobalState.getInstance().getSelectedCity(),
                     forecast.date,
                     forecast.day.iconPhrase,
-                    forecast.temperature.minimum
+                    forecast.temperature.minimum.value
                     );
         }
     }
