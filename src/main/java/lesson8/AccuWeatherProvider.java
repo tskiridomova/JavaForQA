@@ -55,6 +55,7 @@ public class AccuWeatherProvider implements WeatherProvider {
                 );
                 DatabaseRepositorySQLiteImpl db = new DatabaseRepositorySQLiteImpl();
                 db.saveWeatherData(weatherData);
+
                 return weatherData;
             } catch (JsonProcessingException | SQLException e) {
                 e.printStackTrace();

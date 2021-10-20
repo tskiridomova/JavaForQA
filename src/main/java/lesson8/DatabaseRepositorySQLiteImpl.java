@@ -54,17 +54,17 @@ public class DatabaseRepositorySQLiteImpl implements DatabaseRepository {
             saveWeather.setString(3, weatherData.getText());
             saveWeather.setDouble(4, weatherData.getTemperature());
             return saveWeather.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
+
         throw new SQLException("Failure on saving weather object");
     }
 
     @Override
     public List<WeatherData> getAllSavedData() throws SQLException {
-        try {
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(selectWeatherQuery);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(selectWeatherQuery)) {
             statement.setString(1, ApplicationGlobalState.getInstance().getSelectedCity());
             ResultSet rs = statement.executeQuery();
             List<WeatherData> weatherData = new ArrayList<>();
@@ -76,6 +76,7 @@ public class DatabaseRepositorySQLiteImpl implements DatabaseRepository {
                         rs.getDouble("temperature")
                 ));
             }
+            connection.close();
             return weatherData;
         } catch (SQLException throwable) {
             throwable.printStackTrace();
