@@ -67,7 +67,6 @@ public class AccuWeatherProvider implements WeatherProvider {
     @Override
     public List<WeatherData> getAllFromDb() throws SQLException {
         DatabaseRepositorySQLiteImpl db = new DatabaseRepositorySQLiteImpl();
-
         return db.getAllSavedData();
 
     }
