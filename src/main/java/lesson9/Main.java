@@ -1,14 +1,6 @@
 package lesson9;
-
-import lesson9.Demo.Demo6;
-
 import java.util.*;
 import java.util.stream.Stream;
-
-
-
-
-
 
 public class Main {
     public static void main(String[] args) {
